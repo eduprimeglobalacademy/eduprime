@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disable Right-Click Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    iframe {
+      width: 560px;
+      height: 315px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Watch the Video</h1>
+  
+  <!-- Embed YouTube video with disabled right-click -->
+  <iframe 
+    src="https://www.youtube.com/watch?v=lD1X-ODWhvg&pp=ygUFZGFuY2U%3D" 
+    oncontextmenu="return false;" 
+    title="YouTube video player" 
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
+
+  <p>Right-clicking is disabled on the video player above.</p>
+</body>
+</html>
+
