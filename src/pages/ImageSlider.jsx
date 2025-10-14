@@ -18,6 +18,13 @@ import rmsit2 from "../assets/gallery/rmsit2.jpg";
 import rmsit3 from "../assets/gallery/rmsit3.jpg";
 import rmsit4 from "../assets/gallery/rmsit4.jpg";
 import rmsit5 from "../assets/gallery/rmsit5.jpg";
+import acet1  from "../assets/gallery/acet1.jpeg"; 
+import acet2  from "../assets/gallery/acet2.jpeg"; 
+import acet3  from "../assets/gallery/acet3.jpeg"; 
+import angus1 from "../assets/gallery/angus1.jpeg";
+import angus2 from "../assets/gallery/angus2.jpeg";
+import angus3 from "../assets/gallery/angus3.jpeg";
+
 
 
 
@@ -114,6 +121,24 @@ const slideImages = [
     caption: "",
   },{
     url: rmsit5,
+    caption: "",
+  },{ 
+    url: acet1,
+    caption: "Orientation session for the freshers of ACET, Bangalore",
+  },{
+    url: acet2,
+    caption: "",
+  },{
+    url: acet3,
+    caption: "",
+  },{
+    url: angus1,
+    caption: "Corporate communication skills session for engineers of a reputed organisation in Bangalore.",
+  },{
+    url: angus2,
+    caption: "",
+  },{
+    url: angus3,
     caption: "",
   },
   

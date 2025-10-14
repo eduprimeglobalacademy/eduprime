@@ -63,10 +63,10 @@ const Footer = () => {
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition duration-300">
                                     <FaFacebook className="text-2xl md:text-3xl" />
                                 </a>
-                                <a href="https://www.instagram.com/edupieglobal?igsh=MTNqeTg1OGRqdmV5cg==" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition duration-300">
+                                <a href="https://www.instagram.com/eduprime_global_academy/?igsh=MWlvNW41OGc1NXc5Mg%3D%3D#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition duration-300">
                                     <FaInstagram className="text-2xl md:text-3xl" />
                                 </a>
-                                <a href="https://www.linkedin.com/company/edu-pie-global-llp/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-800">
+                                <a href="https://www.linkedin.com/company/eduprimeglobal/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-800">
                                     <FaLinkedin size={30} />
                                 </a>
                             </div>
