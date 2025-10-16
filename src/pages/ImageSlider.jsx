@@ -24,6 +24,8 @@ import acet3  from "../assets/gallery/acet3.jpeg";
 import angus1 from "../assets/gallery/angus1.jpeg";
 import angus2 from "../assets/gallery/angus2.jpeg";
 import angus3 from "../assets/gallery/angus3.jpeg";
+import moucambridge from "../assets/gallery/moucambridge.jpeg";
+import moucambridge1 from "../assets/gallery/moucambridge1.jpeg";
 
 
 
@@ -140,6 +142,12 @@ const slideImages = [
   },{
     url: angus3,
     caption: "",
+  },{
+    url: moucambridge,
+    caption: "MoU between Cmbridge Inst of Tech, North Campus and EduPrime Global Academy for imparting pre-placement training.",
+  },{
+    url: moucambridge1,
+    caption: "", 
   },
   
 ];
