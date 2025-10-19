@@ -26,6 +26,8 @@ import angus2 from "../assets/gallery/angus2.jpeg";
 import angus3 from "../assets/gallery/angus3.jpeg";
 import moucambridge from "../assets/gallery/moucambridge.jpeg";
 import moucambridge1 from "../assets/gallery/moucambridge1.jpeg";
+import siddganga from "../assets/gallery/siddganga.jpeg";
+
 
 
 
@@ -148,6 +150,9 @@ const slideImages = [
   },{
     url: moucambridge1,
     caption: "", 
+  },{
+    url: siddganga,
+    caption: "Blessed to conduct sessions for the students of Sri Siddaganga Mutt, Tumkur",
   },
   
 ];
