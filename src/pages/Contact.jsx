@@ -1,114 +1,136 @@
 import React, { useState } from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
-import sendEmail from '../services/emailService'; // Import the sendEmail function
+import { motion } from 'framer-motion';
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { HiPhone, HiMail, HiCheckCircle } from 'react-icons/hi';
+import sendEmail from '../services/emailService';
 
 const Contact = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleChange = e => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
-
+    setIsLoading(true);
     try {
-      await sendEmail(name, email, message);
-      setName('');
-      setEmail('');
-      setMessage('');
-      alert('Message sent successfully!');
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send message. Please try again later.');
+      await sendEmail(formData.name, formData.email, formData.message);
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch {
+      setStatus('error');
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      {/* Contact Form Section */}
-      <section className="mb-12">
-        <h2 className="text-5xl font-bold text-center bg-gradient-to-r from-navy-900 to-bronze-500 bg-clip-text text-transparent mb-8">Contact Us</h2>
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white rounded-2xl shadow-2xl p-8">
-          <div className="mb-6">
-            <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Your Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-bronze-500 focus:ring-2 focus:ring-bronze-200 transition-all duration-200 outline-none"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Your Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-bronze-500 focus:ring-2 focus:ring-bronze-200 transition-all duration-200 outline-none"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">Your Message</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows="5"
-              className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none resize-none"
-              placeholder="Enter your message"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className={`w-full py-4 rounded-lg text-white font-semibold text-lg transition-all duration-300 ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-navy-900 to-bronze-500 hover:from-navy-800 hover:to-bronze-600 transform hover:scale-105 shadow-lg'}`}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
-      </section>
-
-      {/* Get In Touch via Social Media */}
-      <section className="mb-8 text-center">
-        <h3 className="text-3xl font-semibold text-gray-800 mb-4">Get In Touch</h3>
-        <p className="text-lg text-gray-700 mb-4">Follow us on social media or get in touch directly via email.</p>
-
-        <div className="flex justify-center space-x-6">
-          {/* Social Media Icons */}
-          <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-600">
-            <FaFacebook size={30} />
-          </a>
-          <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-400">
-            <FaTwitter size={30} />
-          </a>
-          <a href="https://www.linkedin.com/company/edu-pie-global-llp/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-800">
-            <FaLinkedin size={30} />
-          </a>
-          <a href="https://www.instagram.com/edupieglobal?igsh=MTNqeTg1OGRqdmV5cg==" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-pink-600">
-            <FaInstagram size={30} />
-          </a>
+    <div className="min-h-screen bg-white">
+      <div className="relative bg-navy-900 py-28 overflow-hidden">
+        <div className="absolute top-1/4 -left-32 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-block text-amber-400 font-semibold text-sm uppercase tracking-widest mb-4">
+            Reach Out
+          </motion.span>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="text-5xl lg:text-6xl font-extrabold text-white mb-6">
+            Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Touch</span>
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-slate-300 text-xl max-w-2xl mx-auto">
+            Have a question? We'd love to hear from you. Send us a message and we'll get back to you as soon as possible.
+          </motion.p>
         </div>
+      </div>
 
-        {/* Email Section */}
-        <div className="mt-6 text-lg text-gray-700">
-          <p className="mb-2">Or reach out to us via email:</p>
-          <a href="mailto:youremail@example.com" className="text-blue-500 hover:underline">
-            <FaEnvelope size={20} className="inline mr-2" />
-            contact@eduprimeglobalacademy.com
-          </a>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid lg:grid-cols-2 gap-16">
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <h2 className="text-3xl font-extrabold text-navy-900 mb-8">Contact Information</h2>
+
+            <div className="space-y-6 mb-10">
+              {[
+                { Icon: HiPhone, label: 'Phone', value: '+91 9886537936', href: 'tel:+919886537936' },
+                { Icon: HiMail, label: 'Email', value: 'contact@eduprimeglobalacademy.com', href: 'mailto:contact@eduprimeglobalacademy.com' },
+              ].map(({ Icon, label, value, href }) => (
+                <div key={label} className="flex items-start gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+                    <Icon className="text-amber-600 text-2xl" />
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-sm mb-1">{label}</div>
+                    <a href={href} className="text-navy-900 font-semibold hover:text-amber-600 transition-colors break-all">{value}</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="text-xl font-bold text-navy-900 mb-4">Follow Us</h3>
+            <div className="flex gap-3">
+              {[
+                { href: 'https://facebook.com', Icon: FaFacebook, label: 'Facebook', color: 'hover:text-blue-500' },
+                { href: 'https://twitter.com', Icon: FaTwitter, label: 'Twitter', color: 'hover:text-sky-400' },
+                { href: 'https://www.linkedin.com/company/edu-pie-global-llp/', Icon: FaLinkedin, label: 'LinkedIn', color: 'hover:text-blue-600' },
+                { href: 'https://www.instagram.com/edupieglobal?igsh=MTNqeTg1OGRqdmV5cg==', Icon: FaInstagram, label: 'Instagram', color: 'hover:text-pink-500' },
+              ].map(({ href, Icon, label, color }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className={`w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 ${color} transition-all duration-300 hover:shadow-md hover:-translate-y-1`}>
+                  <Icon size={20} />
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
+              <h2 className="text-3xl font-extrabold text-navy-900 mb-8">Send a Message</h2>
+
+              {status === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 text-green-700">
+                  <HiCheckCircle className="text-green-500 text-2xl shrink-0" />
+                  <p className="font-medium">Message sent successfully! We'll be in touch soon.</p>
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 font-medium">
+                  Something went wrong. Please try again or email us directly.
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {[
+                  { name: 'name', label: 'Full Name', type: 'text', placeholder: 'John Doe' },
+                  { name: 'email', label: 'Email Address', type: 'email', placeholder: 'john@example.com' },
+                  { name: 'phone', label: 'Phone Number (optional)', type: 'tel', placeholder: '+91 9876543210' },
+                ].map(({ name, label, type, placeholder }) => (
+                  <div key={name}>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">{label}</label>
+                    <input
+                      type={type} name={name} value={formData[name]} onChange={handleChange} placeholder={placeholder}
+                      required={name !== 'phone'}
+                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-amber-400 transition-colors text-slate-800 placeholder-slate-400"
+                    />
+                  </div>
+                ))}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Message</label>
+                  <textarea
+                    name="message" value={formData.message} onChange={handleChange} placeholder="Tell us how we can help..." rows={5} required
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-amber-400 transition-colors text-slate-800 placeholder-slate-400 resize-none"
+                  />
+                </div>
+                <button
+                  type="submit" disabled={isLoading}
+                  className="w-full py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-300 text-navy-900 font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 hover:-translate-y-0.5 text-lg"
+                >
+                  {isLoading ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            </div>
+          </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

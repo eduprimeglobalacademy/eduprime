@@ -1,91 +1,81 @@
 import React from 'react';
-import { FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import Logo from '../assets/eduprimelogo.jpg'; // Adjust the path if needed
 import { useNavigate } from 'react-router-dom';
+import { FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import Logo from '../assets/eduprimelogo.jpg';
+
+const NAV = ['Home', 'About Us', 'Programs', 'Gallery', 'Contact'];
+const NAV_PATHS = ['/', '/about', '/Programs', '/gallery', '/contact'];
 
 const Footer = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleNavigate = (path) => {
-        navigate(path);
-    };
-
-    return (
-        <footer className="py-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-            <div className="container mx-auto px-6">
-                {/* Footer Content */}
-                <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
-                    {/* Left Section: Logo and Details */}
-                    <div className="flex-1 text-center md:text-left mb-10 md:mb-0">
-                        {/* Logo */}
-<div className="flex justify-center md:ml-24 mb-4">  {/* Adjust the ml-24 value to push the logo more to the right */}
-    <img src={Logo} className="w-32" alt="EduPrime Global Academy Logo" />
-</div>
-
-
-                        {/* Footer Description */}
-                        <p className="text-sm font-medium text-gray-400 mx-auto md:mx-0">
-                            EduPrime Global Academy is committed to enhancing your skills and transforming your career with expert trainers in various domains. Join us to unlock your potential!
-                        </p>
-                    </div>
-
-                    {/* Right Section: Company, Get in Touch, and Social Media */}
-                    <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-full md:w-auto">
-                        {/* Company Section */}
-                        <div className="flex-1 text-center md:text-left">
-                            <p className="text-xl font-semibold mb-4 text-gray-200">COMPANY</p>
-                            <ul className="flex flex-col gap-2 text-sm font-medium text-gray-400">
-                                <li onClick={() => handleNavigate('/')} className="hover:text-bronze-400 transition duration-300 cursor-pointer">Home</li>
-                                <li onClick={() => handleNavigate('/about')} className="hover:text-bronze-400 transition duration-300 cursor-pointer">About Us</li>
-                                <li onClick={() => handleNavigate('/programs')} className="hover:text-bronze-400 transition duration-300 cursor-pointer">Programs</li>
-                            </ul>
-                        </div>
-
-                        {/* Get in Touch Section */}
-                        <div className="flex-1 text-center md:text-left">
-                            <p className="text-xl font-semibold mb-4 text-gray-200">GET IN TOUCH</p>
-                            <ul className="flex flex-col gap-3 text-sm font-medium text-gray-400">
-                                <li className="flex items-center gap-2 justify-center md:justify-start">
-                                    <FaPhoneAlt className="text-bronze-400" />
-                                    +919886537936
-                                </li>
-                                <li className="flex items-center gap-2 justify-center md:justify-start">
-                                    <FaEnvelope className="text-bronze-400" />
-                                    contact@eduprimeglobalacademy.com
-                                </li>
-                            </ul>
-                        </div>
-
-                        {/* Social Media Links */}
-                        <div className="flex-1 text-center md:text-left">
-                            <p className="text-xl font-semibold mb-4 text-gray-200">FOLLOW US</p>
-                            <div className="flex gap-6 justify-center md:justify-start">
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition duration-300">
-                                    <FaFacebook className="text-2xl md:text-3xl" />
-                                </a>
-                                <a href="https://www.instagram.com/eduprime_global_academy/?igsh=MWlvNW41OGc1NXc5Mg%3D%3D#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition duration-300">
-                                    <FaInstagram className="text-2xl md:text-3xl" />
-                                </a>
-                                <a href="https://www.linkedin.com/company/eduprimeglobal/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-800">
-                                    <FaLinkedin size={30} />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Horizontal line with small shadow */}
-                <div className="w-full mt-12 mb-6">
-                    <hr className="border-t border-gray-700 shadow-sm" />
-                </div>
-
-                {/* Copyright Section */}
-                <div className="text-center text-sm font-medium text-gray-500">
-                    <p>© {new Date().getFullYear()} EduPrime Global Academy. All Rights Reserved.</p>
-                </div>
+  return (
+    <footer className="bg-navy-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-5">
+              <img src={Logo} alt="EduPrime Logo" className="h-14 w-14 rounded-full object-cover ring-2 ring-amber-500/60" />
+              <div>
+                <span className="block text-white font-bold text-xl leading-tight">EduPrime</span>
+                <span className="block text-amber-400 text-xs font-medium tracking-widest uppercase">Global Academy</span>
+              </div>
             </div>
-        </footer>
-    );
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
+              Bridging the gap between academic education and the corporate world. Empowering graduates with the skills to succeed in their careers.
+            </p>
+            <div className="flex gap-4">
+              {[
+                { href: 'https://www.facebook.com/', Icon: FaFacebook, color: 'hover:text-blue-400' },
+                { href: 'https://www.instagram.com/edupieglobal?igsh=MTNqeTg1OGRqdmV5cg==', Icon: FaInstagram, color: 'hover:text-pink-400' },
+                { href: 'https://www.linkedin.com/company/edu-pie-global-llp/', Icon: FaLinkedin, color: 'hover:text-blue-300' },
+              ].map(({ href, Icon, color }) => (
+                <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+                  className={`w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-slate-400 ${color} transition-all duration-300 hover:bg-white/20`}>
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-white font-bold text-sm uppercase tracking-widest mb-5">Quick Links</p>
+            <ul className="space-y-3">
+              {NAV.map((item, i) => (
+                <li key={item}>
+                  <button onClick={() => navigate(NAV_PATHS[i])}
+                    className="text-slate-400 hover:text-amber-400 text-sm transition-colors duration-200 hover:translate-x-1 transform block">
+                    {item}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-white font-bold text-sm uppercase tracking-widest mb-5">Get In Touch</p>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-slate-400 text-sm">
+                <FaPhoneAlt className="text-amber-500 mt-0.5 shrink-0" />
+                <span>+91 9886537936</span>
+              </li>
+              <li className="flex items-start gap-3 text-slate-400 text-sm">
+                <FaEnvelope className="text-amber-500 mt-0.5 shrink-0" />
+                <a href="mailto:contact@eduprimeglobalacademy.com" className="hover:text-amber-400 transition-colors break-all">
+                  contact@eduprimeglobalacademy.com
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-slate-500 text-sm">© {new Date().getFullYear()} EduPrime Global Academy. All rights reserved.</p>
+          <p className="text-slate-500 text-sm">Empowering Skills, Transforming Futures</p>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

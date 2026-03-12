@@ -1,50 +1,36 @@
-import React, { useState, useEffect } from "react";
-import HeroSection from "../components/HeroSection";
-import Marquee from "../components/Marquee.jsx";
-import AboutEduPie from "./ABoutEdupiehome.jsx";
-import ProgramsSection from "../components/ProgramsSection";
-import TrainersSection from "../components/TrainersSection";
-import PopupComponent from "../components/PopupComponent"; // Import the popup
-import programsData from '../assets/programData'; // Import the program data
+import React, { useState, useEffect } from 'react';
+import HeroSection from '../components/HeroSection';
+import Marquee from '../components/Marquee.jsx';
+import ABoutEdupiehome from './ABoutEdupiehome.jsx';
+import ProgramsSection from '../components/ProgramsSection';
+import TrainersSection from '../components/TrainersSection';
+import TestimonialsSection from '../components/TestimonialsSection';
+import PopupComponent from '../components/PopupComponent';
+import programsData from '../assets/programData';
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [popupProgram, setPopupProgram] = useState(null); // Program for the popup
-  
-  useEffect(() => {
-    const popupShown = sessionStorage.getItem("popupShown");
+  const [popupProgram, setPopupProgram] = useState(null);
 
-    if (!popupShown) {
-      setShowPopup(true);
-      sessionStorage.setItem("popupShown", "true"); // Mark popup as shown for this session
+  useEffect(() => {
+    setPopupProgram(programsData['collegeToCorporate']);
+    const shown = sessionStorage.getItem('popupShown');
+    if (!shown) {
+      const timer = setTimeout(() => { setShowPopup(true); sessionStorage.setItem('popupShown', 'true'); }, 2000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
-  // Example: Set a specific program to show in the popup (could be dynamic)
-  useEffect(() => {
-    setPopupProgram(programsData['collegeToCorporate']); // Set the program to show
-  }, []);
-
   return (
-    <section className="min-h-screen text-gray-900">
-      <HeroSection /> {/* Hero Section */}
-      <ProgramsSection /> {/* Programs Section */}
-      <TrainersSection /> {/* Trainers Section */}  
-      <AboutEduPie /> {/* About EduPie Section */}
-      {/* Show Popup when 'showPopup' is true */}
-      {popupProgram && (
-        <PopupComponent
-          isVisible={showPopup}
-          onClose={closePopup}
-          program={popupProgram} // Passing the program data
-        />
-      )}
-    </section>
-    
+    <div className="min-h-screen">
+      <HeroSection />
+      <Marquee />
+      <ProgramsSection />
+      <ABoutEdupiehome />
+      <TrainersSection />
+      <TestimonialsSection />
+      {popupProgram && <PopupComponent isVisible={showPopup} onClose={() => setShowPopup(false)} program={popupProgram} />}
+    </div>
   );
 };
 

@@ -1,82 +1,95 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import Logo from '../assets/eduprimelogo.jpg';
+
+const NAV_LINKS = [
+  { label: 'Home', path: '/' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Programs', path: '/Programs' },
+  { label: 'Gallery', path: '/gallery' },
+  { label: 'Contact', path: '/contact' },
+];
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
-  };
+  const handleNavigate = (path) => { navigate(path); setIsOpen(false); };
+  const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.toLowerCase().startsWith(path.toLowerCase());
 
   return (
-    <header className="bg-white shadow-lg py-4 sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
-      <div className="container mx-auto flex justify-between items-center px-4">
-        {/* Logo Section */}
-        <button
-          onClick={() => handleNavigate('/')}
-          className="text-2xl font-bold bg-gradient-to-r from-navy-900 to-bronze-500 bg-clip-text text-transparent hover:from-navy-800 hover:to-bronze-600 transition-all duration-300"
-        >
-          EduPrime Global Academy
-        </button>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-navy-900/95 backdrop-blur-md shadow-2xl' : 'bg-navy-900'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          <button onClick={() => handleNavigate('/')} className="flex items-center gap-3 group">
+            <img src={Logo} alt="EduPrime Logo" className="h-12 w-12 rounded-full object-cover ring-2 ring-amber-500/60 group-hover:ring-amber-400 transition-all duration-300" />
+            <div className="text-left">
+              <span className="block text-white font-bold text-lg leading-tight group-hover:text-amber-400 transition-colors duration-300">EduPrime</span>
+              <span className="block text-amber-400 text-xs font-medium tracking-widest uppercase">Global Academy</span>
+            </div>
+          </button>
 
-        {/* Navigation Links (Desktop) */}
-        <nav className="hidden md:flex space-x-4 items-center">
-          <button onClick={() => handleNavigate('/')} className="px-4 py-2 text-gray-700 hover:text-bronze-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-bronze-500 hover:after:w-full after:transition-all after:duration-300">
-            Home
-          </button>
-          <button onClick={() => handleNavigate('/about')} className="px-4 py-2 text-gray-700 hover:text-bronze-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-bronze-500 hover:after:w-full after:transition-all after:duration-300">
-            About Us
-          </button>
-          <button onClick={() => handleNavigate('/Programs')} className="px-4 py-2 text-gray-700 hover:text-bronze-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-bronze-500 hover:after:w-full after:transition-all after:duration-300">
-            Programs
-          </button>
-          <button onClick={() => handleNavigate('/contact')} className="px-4 py-2 text-gray-700 hover:text-bronze-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-bronze-500 hover:after:w-full after:transition-all after:duration-300">
-            Contact
-          </button>
-          <button onClick={() => handleNavigate('/gallery')} className="px-4 py-2 text-gray-700 hover:text-bronze-600 font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-bronze-500 hover:after:w-full after:transition-all after:duration-300">
-            Gallery
-          </button>
-        </nav>
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <button
+                key={link.path}
+                onClick={() => handleNavigate(link.path)}
+                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isActive(link.path) ? 'text-amber-400' : 'text-slate-300 hover:text-white'}`}
+              >
+                {isActive(link.path) && (
+                  <motion.span layoutId="activeTab" className="absolute inset-0 bg-white/10 rounded-lg" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />
+                )}
+                <span className="relative">{link.label}</span>
+              </button>
+            ))}
+            <button
+              onClick={() => handleNavigate('/contact')}
+              className="ml-4 px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-navy-900 text-sm font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 hover:-translate-y-0.5"
+            >
+              Get Started
+            </button>
+          </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button
-            onClick={toggleMobileMenu}
-            type="button"
-            className="text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+            {isOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu (Toggled State) */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <button onClick={() => handleNavigate('/')} className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left transition-colors duration-200">
-            Home
-          </button>
-          <button onClick={() => handleNavigate('/about')} className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left transition-colors duration-200">
-            About Us
-          </button>
-          <button onClick={() => handleNavigate('/Programs')} className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left transition-colors duration-200">
-            Programs
-          </button>
-          <button onClick={() => handleNavigate('/contact')} className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left transition-colors duration-200">
-            Contact
-          </button>
-          <button onClick={() => handleNavigate('/gallery')} className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left transition-colors duration-200">
-            Gallery
-          </button>
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-navy-900 border-t border-white/10"
+          >
+            <div className="px-4 py-4 space-y-1">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.path}
+                  onClick={() => handleNavigate(link.path)}
+                  className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${isActive(link.path) ? 'bg-white/10 text-amber-400' : 'text-slate-300 hover:bg-white/5 hover:text-white'}`}
+                >
+                  {link.label}
+                </button>
+              ))}
+              <button onClick={() => handleNavigate('/contact')} className="w-full mt-2 px-4 py-3 bg-amber-500 hover:bg-amber-400 text-navy-900 text-sm font-bold rounded-lg transition-colors">
+                Get Started
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

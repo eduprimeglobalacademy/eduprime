@@ -1,40 +1,56 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HiX, HiArrowRight } from 'react-icons/hi';
 
 const PopupComponent = ({ isVisible, onClose, program }) => {
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate();
+  if (!program) return null;
 
-  // Handle navigation to the program page
-  const handleGoToProgram = () => {
-    navigate(program.path); // Navigate to the specific program's route
-    onClose();
-  };
+  const handleGoToProgram = () => { navigate(program.path); onClose(); };
 
   return (
-    isVisible && (
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-8  shadow-lg w-96">
-          <h2 className="text-2xl font-semibold mb-4">Are you ready to transition from college to corporate?</h2>
-          
-          <div className="border p-4 mb-4 text-center">
-            <h3 className="text-xl font-semibold">{program.name}</h3>
-            <img src={program.image} alt={program.name} className="w-full h-full object-cover  mb-4" />
-            <p className="text-gray-700">{program.description}</p>
-          </div>
-          
-          <button 
-            className="bg-blue-500 text-white py-2 px-5 " 
-            onClick={handleGoToProgram}>
-            Go to Program
-          </button>
-          <button 
-            className="ml-4 bg-gray-300 text-black py-2 px-4 " 
-            onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </div>
-    )
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-navy-900/70 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+            onClick={e => e.stopPropagation()}
+            className="bg-white rounded-2xl overflow-hidden shadow-2xl max-w-md w-full"
+          >
+            <div className="relative h-48 overflow-hidden">
+              {program.image && <img src={program.image} alt={program.name} className="w-full h-full object-cover" />}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent" />
+              <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/40 transition-colors">
+                <HiX />
+              </button>
+              <div className="absolute bottom-4 left-4">
+                <span className="bg-amber-500 text-navy-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Featured Program</span>
+              </div>
+            </div>
+            <div className="p-6">
+              <h2 className="text-xl font-extrabold text-navy-900 mb-2">{program.name}</h2>
+              <p className="text-slate-600 text-sm leading-relaxed mb-6">{program.description}</p>
+              <div className="flex gap-3">
+                <button onClick={handleGoToProgram}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-amber-500 hover:bg-amber-400 text-navy-900 font-bold rounded-xl transition-all duration-300 hover:shadow-lg">
+                  Explore Program <HiArrowRight />
+                </button>
+                <button onClick={onClose}
+                  className="px-5 py-3 border-2 border-slate-200 hover:border-slate-300 text-slate-600 font-semibold rounded-xl transition-colors">
+                  Close
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

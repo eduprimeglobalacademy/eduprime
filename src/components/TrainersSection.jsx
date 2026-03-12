@@ -1,62 +1,51 @@
-import React from "react";
-import Slider from "react-slick";
-import FacultyCard from "../components/FacultyCard"; // Assuming FacultyCard is already implemented
-import facultyData from "../assets/facultyData"; // Import the faculty data from the new file
-
-// Slider settings with responsive adjustments
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 2500,
-  arrows: false,
-  fade: true,
-  cssEase: "ease-in-out",
-  responsive: [
-    {
-      breakpoint: 640, // Mobile devices
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-    {
-      breakpoint: 768, // Tablets and below
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 1024, // Laptops and above
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-      },
-    },
-  ],
-};
+import React from 'react';
+import { motion } from 'framer-motion';
+import FacultyCard from './FacultyCard';
+import facultyData from '../assets/facultyData';
 
 const TrainersSection = () => {
+  const trainers = Array.isArray(facultyData) ? facultyData : Object.values(facultyData);
+
   return (
-    <div className="text-center my-24 px-6 sm:px-12">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-10">
-        Meet Our Expert Trainers
-      </h2>
-      <Slider {...sliderSettings}>
-        {facultyData.map((faculty) => (
-          <FacultyCard
-            key={faculty.id} // Assuming facultyData contains unique ids
-            name={faculty.name}
-            position={faculty.position}
-            image={faculty.image}
-            bio={faculty.bio}
-          />
-        ))}
-      </Slider>
-    </div>
+    <section className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            className="inline-block text-amber-600 font-semibold text-sm uppercase tracking-widest mb-3">
+            Expert Trainers
+          </motion.span>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl lg:text-5xl font-extrabold text-navy-900 mb-4">
+            Meet Our Faculty
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-slate-500 max-w-2xl mx-auto text-lg">
+            Learn from industry veterans and seasoned professionals who bring real-world experience to every session.
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {trainers.map((trainer, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.5 }}
+            >
+              <FacultyCard
+                image={trainer.image}
+                name={trainer.name}
+                role={trainer.position || trainer.role || trainer.designation}
+                expertise={trainer.bio}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -1,39 +1,46 @@
 # EduPrime Global Academy
 
 ## Overview
-A React + Vite single-page application for EduPrime Global Academy, an educational training institute. The site showcases programs, faculty, trainers, testimonials, and contact information.
+A React + Vite single-page application for EduPrime Global Academy, an educational training institute. The site showcases programs, faculty, trainers, testimonials, and contact information with a modern navy/gold design language.
 
 ## Tech Stack
 - **Frontend**: React 18 with React Router DOM v6
-- **Build Tool**: Vite 5
-- **Styling**: Tailwind CSS, Bootstrap 5, styled-components
-- **Animations**: Framer Motion, Animate.css
-- **UI Components**: react-slick, react-slideshow-image, Swiper
+- **Build Tool**: Vite 5 (port 5000, host 0.0.0.0)
+- **Styling**: Tailwind CSS (custom navy/bronze palette), Inter font from Google Fonts
+- **Animations**: Framer Motion
+- **UI Libraries**: react-icons (HeroIcons, FontAwesome)
 - **Email**: EmailJS (@emailjs/browser)
-- **Icons**: react-icons
+
+## Design System
+- **Primary**: navy-900 (#1e3a5f) — backgrounds, headers, dark sections
+- **Accent**: amber-500 (#f59e0b) — CTAs, highlights, decorative elements
+- **Neutral**: slate-* — body text and subtle backgrounds
+- **Font**: Inter (weights 300–900) + Playfair Display for headings
 
 ## Project Structure
 ```
 src/
-  assets/         # Images and static data files (categoriesData, facultyData, programData, sliderImages)
-  components/     # Reusable UI components (Navbar, Footer, HeroSection, etc.)
-  pages/          # Page-level components (Home, About, Programs, Contact, etc.)
-  services/       # emailService.jsx for contact form
-  App.jsx         # Root component
-  Router.jsx      # Route definitions
-  main.jsx        # Entry point
-  index.css       # Global styles
+  assets/          # Images, facultyData.jsx, programData.jsx, sliderImages, gallery/
+  components/      # Navbar, Footer, HeroSection, Marquee, ProgramsSection,
+                   # TrainersSection, FacultyCard, TestimonialsSection,
+                   # PopupComponent, Layout
+  pages/           # Home, About, Programs, Contact, ProgramDetails,
+                   # ImageSlider (Gallery), CollegetoCorporate, EmployeeSkills,
+                   # ABoutEdupiehome
+  services/        # emailService.jsx
+  App.jsx / Router.jsx / main.jsx / index.css
 ```
 
+## Key Architecture
+- **facultyData.jsx**: Array of `{ name, position, image, bio }` objects
+- **programData.jsx**: Object map of `id -> { name, description, image, path, videoUrl, isTopProgram }`
+- **Layout**: Navbar (fixed top) + Outlet + Footer; main content has `pt-20` to clear navbar
+
 ## Development
-- **Run**: `npm run dev` (starts on port 5000)
+- **Run**: `npm run dev` → http://localhost:5000
 - **Build**: `npm run build`
 
 ## Deployment
-Configured as a **static** site deployment:
-- Build command: `npm run build`
-- Public directory: `dist`
-
-## Replit Configuration
-- Vite dev server runs on `0.0.0.0:5000` with `allowedHosts: true` for proxy compatibility
-- Workflow: "Start application" → `npm run dev`
+Configured as **static** site:
+- Build: `npm run build`
+- Public dir: `dist`
